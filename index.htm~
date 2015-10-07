@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Algorithm works</title>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+      <script src="//cdn.bootcss.com/prefixfree/1.0.7/prefixfree.min.js"></script>
+      <script src="js/acesrc/ace.js"></script>
+      <script src="js/codehlt.js"></script>
+      <link href="favicon.png" rel="icon" type="image/png" />
+      <link href="css/page.css" rel="stylesheet"/>
+      <script type="text/x-mathjax-config">
+      MathJax.Hub.Config(
+         {
+            extensions: ["tex2jax.js"],
+            jax: ["input/TeX", "output/SVG"],
+            tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true
+         },
+         "HTML-CSS": { availableFonts: ["STIX","TeX"] }
+      });
+      </script>
+   </head>
+   <body>
+      <div class="page">
+         <h1>Algorithm Works Index Page</h1>
+         <div class="float downside" title="simple navigator">
+            <a href="about.htm">about</a><space style="width:0.4em;height:1em;"></space><a href="help_page.htm">help</a>
+         </div>
+      </div>
+      <script>
+         highlightAllWithACE();
+      </script>
+   </body>
+</html>

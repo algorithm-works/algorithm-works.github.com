@@ -64,6 +64,7 @@ body,html{
 .page{
    font-family: Gentium Book Basic,Linux Libertine Display O;
    font-size:18px;
+   position:relative;
 }
 .page code{
    font-family:Monaco,Consolas,Courier New;
@@ -155,4 +156,31 @@ h1,h2,h3,h4,h5,h6{
    border-left: 2px solid #bbb;
    background:rgba(255,255,255,.1);
    padding-left:4px;
+}
+* a{
+   text-decoration: none;
+   color:#3399ff;
+   border-bottom:1px transparent dashed;
+}
+* a:hover{
+   border-bottom:1px solid #4af;
+   transition:.2s linear;
+}
+* a:visited{
+   color:#26e;
+}
+.float{
+   position:absolute;
+}
+space{
+   display:inline-block;
+}
+.float.downside{
+   right:0px;
+   bottom:0px;
+   border-radius:0 0 4px 0;
+   background:rgba(255,255,255,.8);
+   height:30px;
+   line-height:36px;
+   margin:3px;
 }
