@@ -1,22 +1,31 @@
 *::-webkit-scrollbar {
-  width: 16px;
-  height: 14px;
+  width: 6px;
+  height: 6px;
 }
 
 *::-webkit-scrollbar-track,
 *::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  border: 5px solid transparent;
+  border: 1px solid transparent;
 }
 
 *::-webkit-scrollbar-track {
 //  box-shadow: 1px 1px 5px rgba(0,0,0,.2) inset;
+   background:transparent;
 }
 
 *::-webkit-scrollbar-thumb {
   min-height: 20px;
   background-clip: content-box;
-  box-shadow: 0 0 0 5px rgba(0,0,0,.2) inset;
+  box-shadow: 0 0 0 10px rgba(0,0,0,.1) inset;
+//    background:rgba(220,220,220,.3);
+//opacity: 0.3;
+  transition: box-shadow 0.2s linear;
+}
+*::-webkit-scrollbar-thumb:hover {
+//  background:rgba(220,220,220,1);
+box-shadow: 0 0 0 10px rgba(0,0,0,.4) inset;
+  transition: box-shadow 0.2s linear;
 }
 
 *::-webkit-scrollbar-corner {
@@ -27,6 +36,9 @@
 }
 body,html{
    background:#aaa;
+   overflow-x: hidden;
+   padding:0px;
+   margin:0;
 }
 .page{
    width:calc(100% - 20px);
@@ -48,6 +60,8 @@ body,html{
 @media screen and (min-width: 1261px) and (max-width: 1920px){
    .page{
       height: calc(100vh - 20px);
+//      height:auto;
+      overflow-x: scroll;
       column-count: 2;
       column-gap: 20px;
       column-rule: 3px dashed #bbb;
