@@ -34,7 +34,7 @@
 <pre>int gcd(a,b)=
 	[a if b==0 else gcd(b,a%b)]</pre>
 			<h3>C++代码</h3>
-<pre class="codehlt" data-mode="ace/mode/cpp" data-height="100px">inline long gcd(long a,long b){
+<pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="100px">inline long gcd(long a,long b){
 	return b?gcd(b,a%b):a;
 }</pre>
 		</div>
