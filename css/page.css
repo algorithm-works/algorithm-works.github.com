@@ -208,6 +208,7 @@ blockquote[alert]{
 	background:#fff0e7;
 	border-left:4px solid #ee3300;
 	border-radius:0px;
+	padding:5px;
 	padding-left:10px;
 	box-shadow:0 0 2px #ccc;
 }
