@@ -200,11 +200,11 @@ space{
    line-height:36px;
    margin:3px;
 }
-a.qhref{
+a[qhref]{
 	font-size:20px;
 	margin-left:10px;
 }
-blockquote.alert{
+blockquote[alert]{
 	background:#fff0e7;
 	border-left:4px solid #ee3300;
 	border-radius:0px;
