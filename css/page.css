@@ -1,3 +1,4 @@
+@import url(../font/stylesheet.css);
 *::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -78,12 +79,12 @@ body,html{
    }
 }
 .page{
-   font-family: Gentium Book Basic,Linux Libertine Display O;
+   font-family: Gentium Book Basic,Linux Libertine Display O,'gt_b';
    font-size:18px;
    position:relative;
 }
 .page code{
-   font-family:Monaco,Consolas,Courier New;
+   font-family:Monaco,Consolas,Courier New,'monacoregular';
    font-size:16px;
    display: inline-block;
    border: #d7d7d7 1px solid;
@@ -106,7 +107,7 @@ h1 sub{
    font-size:22px;
    color:#333;
    text-indent:30px;
-   font-family:Bitstream Charter;
+   font-family:Bitstream Charter,'charterbold';
 }
 div.ct_sp{
    /*containing a dividual page*/
