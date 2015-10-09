@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Algorithm works</title>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+		<script src="//cdn.bootcss.com/prefixfree/1.0.7/prefixfree.min.js"></script>
+		<script src="../../js/acesrc/ace.js"></script>
+		<script src="../../js/codehlt.js"></script>
+		<link href="../../favicon.png" rel="icon" type="image/png" />
+		<link href="../../css/page.css" rel="stylesheet"/>
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({
+				extensions: ["tex2jax.js"],
+				jax: ["input/TeX", "output/SVG"],
+				tex2jax: {
+					inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+					displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+					processEscapes: true
+				},
+				"HTML-CSS": { availableFonts: ["STIX","TeX"] }
+			});
+		</script>
+	</head>
+	<body>
+		<div class="page">
+			<div class="float downside"><a href="../">返回'数论算法'</a><space style="width:0.4em;height:1em;"></space><a href="../../">返回首页</a></div>
+			<h1>最大公约数问题</h1>
+			<p>整除理论作为初等数论的重要组成部分,是研究时间最早的数学领域,其历史可追溯到公元前六世纪,发源于古希腊并在公元前四世纪以前形成完善的体系.这个问题大约在毕达哥拉斯时代(公元前六世纪)已经出现,并且可能发展出了辗转相除法(首次出现于欧几里得《几何原本》).这是一个有效算法,时间复杂度为$\mathtt{n}(n^2\log{n})$.</p>
+			<p>欧几里得给出过这个算法的证明.事实上,数论的研究在那时已经有了现代数学的雏形,其本质上不同于古中国的经验主义数学,是逻辑推演的结果.</p>
+		</div>
+		<script>
+			highlightAllWithACE();
+		</script>
+	</body>
+</html>
