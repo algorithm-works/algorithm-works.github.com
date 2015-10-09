@@ -28,6 +28,9 @@
          <div class="float downside" title="simple navigator">
             <a href="about.htm">关于</a><space style="width:0.4em;height:1em;"></space><a href="help_page.htm">帮助</a>
          </div>
+         <h2>数论</h2>
+         <p>数论是一门非常古老的学科.它出现于古希腊时代并在那时达到了其发展历史上的一个小高潮,从文艺复兴开始在西方蓬勃发展,并在近代传入东方.几何与数论可以说是西方科学的源头.</p>
+         <a href="/number-theory">[主页面]</a>
       </div>
       <script>
          highlightAllWithACE();
