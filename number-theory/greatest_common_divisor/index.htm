@@ -43,12 +43,32 @@
 				可半者半之，不可半者，副置分母、子之数，以少减多，更相减损，求其等也。以等数约之。
 			</blockquote>
 			<p>主要思想:将两数迭代相减,如果两数都为偶数则将两数都取其半,答案乘2.直到此算法中两数相等为止.</p>
-<pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="100px">//Obsoleted O(n) method.
+<pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="200px" data-width="900px">//Obsoleted exptime method.
 #include "algorithm"
 inline int gcd_substraction(int a,int b){
 	if(a&lt;b) std::swap(a,b);
 	a-=b;
-	if(a & 1 || b & 1) return gcd_substraction(a,b); else return gcd(a>>1,b>>1)<< 1;
+	if(a &amp; 1 || b &amp; 1) return gcd_substraction(a,b); else return gcd(a>>1,b>>1)&lt;&lt;1;
+}
+</pre>
+			<h4>Stein算法</h4>
+			<blockquote warn>这个算法可以是对更相相损术的另一种理解.</blockquote>
+			<blockquote quote><a href="http://www.sciencedirect.com/science/article/pii/0021999167900472" title="SD/Non-free">Stein论文地址</a></blockquote>
+			<p>主要思想: 在上面算法的基础上,每当其中有一个数有2因子就除去.</p>
+<pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="200px" data-width="900px">//better O(n^2) method
+#include "algorithm"
+inline long long abs(long long a){
+	return (a>0)?a:-a;
+}
+inline long long gcd_binary(long long a,long long b){
+	if(!b) return a;
+	if(!a) return b;
+	long long q=0;
+	while(!(a&amp;1)) a>>=1,++q;
+	while(!(b&amp;1)) b>>=1,--q;
+	q=abs(q);
+	if(a&lt;b) std::swap(a,b);
+	return gcd_binary(a-b,b)&lt;&lt;q;
 }
 </pre>
 		</div>

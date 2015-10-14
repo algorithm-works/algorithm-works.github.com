@@ -206,12 +206,20 @@ a[qhref]{
 	margin-left:10px;
 }
 blockquote[alert]{
-	background:#fff0e7;
-	border-left:4px solid #ee3300;
-	border-radius:0px;
-	padding:5px;
-	padding-left:10px;
-	box-shadow:0 0 2px #ccc;
+   background:#fff0e7;
+   border-left:4px solid #ee3300;
+   border-radius:0px;
+   padding:5px;
+   padding-left:10px;
+   box-shadow:0 0 2px #ccc;
+}
+blockquote[warn]{
+   background:#fff7e0;
+   border-left:4px solid #eebb44;
+   border-radius:0px;
+   padding:5px;
+   padding-left:10px;
+   box-shadow:0 0 2px #ccc;
 }
 blockquote[quote]{
    background:#f7fff0;
