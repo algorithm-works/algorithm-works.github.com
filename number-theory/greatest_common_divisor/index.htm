@@ -37,6 +37,20 @@
 <pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="100px">inline long gcd(long a,long b){
 	return b?gcd(b,a%b):a;
 }</pre>
+			<h3>更相相损术与Stein算法</h3>
+			<p>更相相损术出处:《九章算术》.</p>
+			<blockquote quote>
+				可半者半之，不可半者，副置分母、子之数，以少减多，更相减损，求其等也。以等数约之。
+			</blockquote>
+			<p>主要思想:将两数迭代相减,如果两数都为偶数则将两数都取其半,答案乘2.直到此算法中两数相等为止.</p>
+<pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="100px">//Obsoleted O(n) method.
+#include "algorithm"
+inline int gcd_substraction(int a,int b){
+	if(a&lt;b) std::swap(a,b);
+	a-=b;
+	if(a & 1 || b & 1) return gcd_substraction(a,b); else return gcd(a>>1,b>>1)<< 1;
+}
+</pre>
 		</div>
 		<script>
 			highlightAllWithACE();

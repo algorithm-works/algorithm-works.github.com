@@ -213,3 +213,11 @@ blockquote[alert]{
 	padding-left:10px;
 	box-shadow:0 0 2px #ccc;
 }
+blockquote[quote]{
+   background:#f7fff0;
+   border-left:4px solid #99ee33;
+   border-radius:0px;
+   padding:5px;
+   padding-left:10px;
+   box-shadow:0 0 2px #ccc;
+}
