@@ -56,21 +56,19 @@ inline int gcd_substraction(int a,int b){
 			<blockquote quote><a href="http://www.sciencedirect.com/science/article/pii/0021999167900472" title="SD/Non-free">Stein论文地址</a></blockquote>
 			<p>主要思想: 在上面算法的基础上,每当其中有一个数有2因子就除去.</p>
 <pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="200px" data-width="900px">//better O(n^2) method
-#include "algorithm"
-inline long long abs(long long a){
-	return (a>0)?a:-a;
-}
 inline long long gcd_binary(long long a,long long b){
 	if(!b) return a;
 	if(!a) return b;
-	long long q=0;
-	while(!(a&amp;1)) a>>=1,++q;
-	while(!(b&amp;1)) b>>=1,--q;
-	q=abs(q);
+	int qa=0,qb=0;
+	while(!(a&amp;1)) a>>=1,++qa;
+	while(!(b&amp;1)) b>>=1,++qb;
+	if(qb&lt;qa) qa=qb;
 	if(a&lt;b) std::swap(a,b);
-	return gcd_binary(a-b,b)&lt;&lt;q;
+	return gcd_binary(a-b,b)&lt;&lt;qa;
 }
 </pre>
+			<blockquote quote><b>注意:</b>此方法只在大整数上更快.</blockquote>
+			<blockquote quote><a href="./gcdBE_comp.cpp">测试代码</a></blockquote>
 		</div>
 		<script>
 			highlightAllWithACE();
