@@ -229,3 +229,11 @@ blockquote[quote]{
    padding-left:10px;
    box-shadow:0 0 2px #ccc;
 }
+blockquote[add]{
+   background:#e0f0ff;
+   border-left:4px solid #2266ff;
+   border-radius:0px;
+   padding:5px;
+   padding-left:10px;
+   box-shadow:0 0 2px #ccc;
+}
