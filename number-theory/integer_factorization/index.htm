@@ -29,7 +29,7 @@
 			<p>试除法是最显而易见的一种质因数分解的方法.我们可以从小到大枚举质因子,然后将它一步步从原数中剔除.由于唯一分解定理,我们可知这个分解结果是唯一的.</p>
 			<p>对于质因数分解我们可以显然地估计出一个上界:$O(\sqrt{n})$.因为一个合数必定有不大于$\sqrt{n}$的质因子,反证法易证,那么我们只需要当枚举的这个数大于当前整数的$\sqrt{n}$时跳出,剩下的那个数一定是一个质数.</p>
 			<p>对于试除法我们可以用更好的生成素数的方法进行常数优化.对于大整数这个方法的效率极端低下.</p>
-<pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="400px" data-width="700px">struct prime_exponent{
+<pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="400px" data-width="800px">struct prime_exponent{
 	long prime,exponent;
 	prime_exponent(long prime=2,long exponent=0):prime(prime),exponent(exponent){}
 };
@@ -65,6 +65,37 @@ struct trial_division_factor{
 		return length;
 	}
 };
+</pre>
+			<h2>费马法</h2>
+			<p>一个不含因子2的合数$q$可以写成$q=x^2-y^2$,其中$x,y$都是整数.证明:假设$q=q_1q_2$,因为$q$为奇数所以$q_1,q_2$都为奇数,那么$q1+q2$与$q1-q2$都为偶数.这样,令$x=\frac{q_1+q_2}{2},y=\frac{q_1-q_2}{2}$,显然有$x+y=q_1,x-y=q_2$,那么此时$(x+y)(x-y)=x^2-y^2$,且$x,y$都是偶数.</p>
+			<p>费马法的思想就是这么来的:构造出这里的$x$和$y$.我们使用暴力枚举法.这个算法对于两个大质因数比较接近的数是比较快的,它的最坏复杂度是$O(\sqrt{n})$.其实这相当于另外一种试除法,即从$\sqrt{n}$向0试除.</p>
+			<p>有最快的一些现代的分解算法(QS,GNFS等)是基于费马法的</p>
+			<h2>费马法的一些简单优化</h2>
+			<p>简单优化区别与复杂优化的重要一点是,时间增长级别的优化.比如指数级相对于亚指数级.费马法有一些不错的优化方法.</p>
+			<h3>与试除法合用</h3>
+			<p>这个非常显然,只需要设置一个试除法处理到的上界(或费马法的下界)</p>
+			<h3>筛法优化</h3>
+			<p>注意到若是$x=n^2$,则$x\equiv n^2\pmod{\mathtt{some\~number}}$.</p>
+			<p>而我们需要找的,实际上是一个$a^2-N=b^2$.</p>
+			<p>那么有一个性质,就是$(a+p)^2\equiv a^2\pmod{p}$.这个性质有什么用呢?</p>
+			<p>其实这启发了我们可以在搜索时跳过一些不必要的$a$值.假设$a^2-N\not= b^2$,那$(a+p)^2-N\not=b^2$.</p>
+			<p>那么我们就可以设计出一个算法,它可以跳过一些不必要搜索的值.我们从小到大选取一堆素数,先对最小的那个素数$p_1$,找出一个$a^2-N\equiv b^2\pmod{p_1}$,再以$p_1$一步跳跃着找$a^2-N\equiv b^2\pmod{p+2}$,再以$p_1p_2$一步跳着找...这个过程需要递归,因为二次剩余不只一个,我们需要对所有的都找过去.</p>
+<pre class="codehlt" mode="ace/mode/c_cpp" data-height="400px">//伪代码
+int fermat_with_sieve(int k,int a,int a_end,int a_step,int modulus){
+	int p=a,q=0;
+	while(q&lt;modulus){
+		if(p>a_end) return -1;
+		int b2=a*a-k;
+		if(is_quadratic_residue(b2%modulus,modulus)){//可以通过Jacobi symbol计算是否为二次剩余.这里我们假设modulus是素数.
+		//这个程序改改差不多就可以用了
+			int pp=fermat_with_sieve(k,a,a_end,a_step*modulus,next_prime(modulus));
+			if(~pp) return pp;
+		}
+		a+=a_step;
+		++q;
+	}
+	return -1;
+}
 </pre>
 		</div>
 		<script>
