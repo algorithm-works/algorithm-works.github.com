@@ -75,7 +75,7 @@ struct trial_division_factor{
 			<h3>与试除法合用</h3>
 			<p>这个非常显然,只需要设置一个试除法处理到的上界(或费马法的下界)</p>
 			<h3>筛法优化</h3>
-			<p>注意到若是$x=n^2$,则$x\equiv n^2\pmod{\mathtt{some\~number}}$.</p>
+			<p>注意到若是$x=n^2$,则$x\equiv n^2\pmod{\mathtt{[some~number]}}$.</p>
 			<p>而我们需要找的,实际上是一个$a^2-N=b^2$.</p>
 			<p>那么有一个性质,就是$(a+p)^2\equiv a^2\pmod{p}$.这个性质有什么用呢?</p>
 			<p>其实这启发了我们可以在搜索时跳过一些不必要的$a$值.假设$a^2-N\not= b^2$,那$(a+p)^2-N\not=b^2$.</p>
@@ -86,7 +86,8 @@ int fermat_with_sieve(int k,int a,int a_end,int a_step,int modulus){
 	while(q&lt;modulus){
 		if(p>a_end) return -1;
 		int b2=a*a-k;
-		if(is_quadratic_residue(b2%modulus,modulus)){//can be calculated with Jacobi symbol.
+		if(is_quadratic_residue(b2%modulus,modulus)){//可以通过Jacobi symbol计算是否为二次剩余.这里我们假设modulus是素数.
+		//这个程序改改差不多就可以用了
 			int pp=fermat_with_sieve(k,a,a_end,a_step*modulus,next_prime(modulus));
 			if(~pp) return pp;
 		}
