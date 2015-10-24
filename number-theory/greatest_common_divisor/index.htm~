@@ -2,7 +2,6 @@
 <html>
 	<head>
 		<title>Algorithm works</title>
-		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
 		<script src="//cdn.bootcss.com/prefixfree/1.0.7/prefixfree.min.js"></script>
 		<script src="../../js/acesrc/ace.js"></script>
 		<script src="../../js/codehlt.js"></script>
@@ -20,6 +19,7 @@
 				"HTML-CSS": { availableFonts: ["STIX","TeX"] }
 			});
 		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
 	</head>
 	<body>
 		<div class="page">
@@ -37,6 +37,38 @@
 <pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="100px">inline long gcd(long a,long b){
 	return b?gcd(b,a%b):a;
 }</pre>
+			<h3>更相相损术与Stein算法</h3>
+			<p>更相相损术出处:《九章算术》.</p>
+			<blockquote quote>
+				可半者半之，不可半者，副置分母、子之数，以少减多，更相减损，求其等也。以等数约之。
+			</blockquote>
+			<p>主要思想:将两数迭代相减,如果两数都为偶数则将两数都取其半,答案乘2.直到此算法中两数相等为止.</p>
+<pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="200px" data-width="900px">//Obsoleted exptime method.
+#include "algorithm"
+inline int gcd_substraction(int a,int b){
+	if(a&lt;b) std::swap(a,b);
+	a-=b;
+	if(a &amp; 1 || b &amp; 1) return gcd_substraction(a,b); else return gcd(a>>1,b>>1)&lt;&lt;1;
+}
+</pre>
+			<h4>Stein算法</h4>
+			<blockquote warn>这个算法可以是对更相相损术的另一种理解.</blockquote>
+			<blockquote quote><a href="http://www.sciencedirect.com/science/article/pii/0021999167900472" title="SD/Non-free">Stein论文地址</a></blockquote>
+			<p>主要思想: 在上面算法的基础上,每当其中有一个数有2因子就除去.</p>
+<pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="200px" data-width="900px">//better O(n^2) method
+inline long long gcd_binary(long long a,long long b){
+	if(!b) return a;
+	if(!a) return b;
+	int qa=0,qb=0;
+	while(!(a&amp;1)) a>>=1,++qa;
+	while(!(b&amp;1)) b>>=1,++qb;
+	if(qb&lt;qa) qa=qb;
+	if(a&lt;b) std::swap(a,b);
+	return gcd_binary(a-b,b)&lt;&lt;qa;
+}
+</pre>
+			<blockquote add><b>注意:</b>此方法只在大整数上更快.</blockquote>
+			<blockquote add><a href="./gcdBE_comp.cpp">测试代码</a></blockquote>
 		</div>
 		<script>
 			highlightAllWithACE();

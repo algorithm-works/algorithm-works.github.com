@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Algorithm works</title>
+		<script src="//cdn.bootcss.com/prefixfree/1.0.7/prefixfree.min.js"></script>
+		<script src="../../js/acesrc/ace.js"></script>
+		<script src="../../js/codehlt.js"></script>
+		<link href="../../favicon.png" rel="icon" type="image/png" />
+		<link href="../../css/page.css" rel="stylesheet"/>
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({
+				extensions: ["tex2jax.js"],
+				jax: ["input/TeX", "output/SVG"],
+				tex2jax: {
+					inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+					displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+					processEscapes: true
+				},
+				"HTML-CSS": { availableFonts: ["STIX","TeX"] }
+			});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+	</head>
+	<body>
+		<div class="page">
+			<div class="float downside"><a href="../">返回'数论算法'</a><space style="width:0.4em;height:1em;"></space><a href="../../">返回首页</a></div>
+			<h1>质因数分解</h1>
+			<h2>试除法</h2>
+			<p>试除法是最显而易见的一种质因数分解的方法.我们可以从小到大枚举质因子,然后将它一步步从原数中剔除.由于唯一分解定理,我们可知这个分解结果是唯一的.</p>
+			<p>对于质因数分解我们可以显然地估计出一个上界:$O(\sqrt{n})$.因为一个合数必定有不大于$\sqrt{n}$的质因子,反证法易证,那么我们只需要当枚举的这个数大于当前整数的$\sqrt{n}$时跳出,剩下的那个数一定是一个质数.</p>
+			<p>对于试除法我们可以用更好的生成素数的方法进行常数优化.对于大整数这个方法的效率极端低下.</p>
+<pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="400px" data-width="700px">struct prime_exponent{
+	long prime,exponent;
+	prime_exponent(long prime=2,long exponent=0):prime(prime),exponent(exponent){}
+};
+struct trial_division_factor{
+	long length;
+	prime_exponent p[40];
+	inline void clear(){
+		/* you don't need to clear manually,
+		// it will be automatically called when a
+		// new factorization session is started. */
+		for(long i=0;i&lt;40;++i) p[i]=prime_exponent(2,0);
+	}
+	inline long sqr(long p){ return p*p; }
+	inline long operator()(long inp){
+		long factor_now=2;
+		length=0;
+		while(inp>=sqr(factor_now)){
+			if(inp%factor_now){
+				++factor_now;
+				continue;
+			}else{
+				p[length].prime=factor_now;
+				p[length].exponent=0;
+				while(!(inp%factor_now)) ++p[length].exponent,inp/=factor_now;
+				++length;
+			}
+		}
+		if(inp!=1){
+			p[length].prime=factor_now;
+			p[length].exponent=1;
+			++length;
+		}
+		return length;
+	}
+};
+</pre>
+		</div>
+		<script>
+			highlightAllWithACE();
+		</script>
+	</body>
+</html>
