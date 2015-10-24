@@ -80,16 +80,13 @@ struct trial_division_factor{
 			<p>那么有一个性质,就是$(a+p)^2\equiv a^2\pmod{p}$.这个性质有什么用呢?</p>
 			<p>其实这启发了我们可以在搜索时跳过一些不必要的$a$值.假设$a^2-N\not= b^2$,那$(a+p)^2-N\not=b^2$.</p>
 			<p>那么我们就可以设计出一个算法,它可以跳过一些不必要搜索的值.我们从小到大选取一堆素数,先对最小的那个素数$p_1$,找出一个$a^2-N\equiv b^2\pmod{p_1}$,再以$p_1$一步跳跃着找$a^2-N\equiv b^2\pmod{p+2}$,再以$p_1p_2$一步跳着找...这个过程需要递归,因为二次剩余不只一个,我们需要对所有的都找过去.</p>
-<pre class="codehlt" mode="ace/mode/c_cpp" data-height="400px">//pseudo code
+<pre class="codehlt" mode="ace/mode/c_cpp" data-height="350px" data-width="800px">//pseudo code
 long fermat_with_sieve(long k,long a,long a_end,long a_step,long modulus){
 	long p=a,q=0;
 	while(q&lt;modulus){
 		if(p>a_end) return -1;
 		long b2=a*a-k;
 		if(is_quadratic_residue(b2%modulus,modulus)){
-		//可以通过Jacobi symbol计算是否为二次剩余.这里我们假设modulus是素数.
-		//这个程序改改差不多就可以用了
-		//
 			long pp=fermat_with_sieve(k,a,a_end,a_step*modulus,next_prime(modulus));
 			if(~pp) return pp;
 		}
