@@ -200,6 +200,7 @@ space{
    height:30px;
    line-height:36px;
    margin:3px;
+   z-index:9;
 }
 a[qhref]{
 	font-size:20px;

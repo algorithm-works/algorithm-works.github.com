@@ -1,3 +1,4 @@
+@import url(../font/stylesheet.css);
 *::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -10,7 +11,7 @@
 }
 
 *::-webkit-scrollbar-track {
-//  box-shadow: 1px 1px 5px rgba(0,0,0,.2) inset;
+/*  box-shadow: 1px 1px 5px rgba(0,0,0,.2) inset;*/
    background:transparent;
 }
 
@@ -18,12 +19,12 @@
   min-height: 20px;
   background-clip: content-box;
   box-shadow: 0 0 0 10px rgba(0,0,0,.1) inset;
-//    background:rgba(220,220,220,.3);
-//opacity: 0.3;
+/*//    background:rgba(220,220,220,.3);
+//opacity: 0.3;*/
   transition: box-shadow 0.2s linear;
 }
 *::-webkit-scrollbar-thumb:hover {
-//  background:rgba(220,220,220,1);
+/*//  background:rgba(220,220,220,1);*/
 box-shadow: 0 0 0 10px rgba(0,0,0,.4) inset;
   transition: box-shadow 0.2s linear;
 }
@@ -62,7 +63,7 @@ body,html{
 @media screen and (min-width: 1261px) and (max-width: 1920px){
    .page{
       height: calc(100vh - 20px);
-//      height:auto;
+/*//      height:auto;*/
       overflow-x: scroll;
       column-count: 2;
       column-gap: 20px;
@@ -78,12 +79,12 @@ body,html{
    }
 }
 .page{
-   font-family: Gentium Book Basic,Linux Libertine Display O;
+   font-family: Gentium Book Basic,'gt_b';
    font-size:18px;
    position:relative;
 }
 .page code{
-   font-family:Monaco,Consolas,Courier New;
+   font-family:Monaco,Consolas,'monacoregular';
    font-size:16px;
    display: inline-block;
    border: #d7d7d7 1px solid;
@@ -106,7 +107,7 @@ h1 sub{
    font-size:22px;
    color:#333;
    text-indent:30px;
-   font-family:Bitstream Charter;
+   font-family:Bitstream Charter,'charterbold';
 }
 div.ct_sp{
    /*containing a dividual page*/
@@ -140,7 +141,7 @@ h6{
 }
 h1,h2,h3,h4,h5,h6{
    color:#000;
-   font-family:Linux Libertine Display O;
+   font-family:Linux Libertine Display O,'linux_libertine_display_oRg';
 }
 
 
@@ -205,9 +206,34 @@ a[qhref]{
 	margin-left:10px;
 }
 blockquote[alert]{
-	background:#fff0e7;
-	border-left:4px solid #ee3300;
-	border-radius:0px;
-	padding-left:10px;
-	box-shadow:0 0 2px #ccc;
+   background:#fff0e7;
+   border-left:4px solid #ee3300;
+   border-radius:0px;
+   padding:5px;
+   padding-left:10px;
+   box-shadow:0 0 2px #ccc;
+}
+blockquote[warn]{
+   background:#fff7e0;
+   border-left:4px solid #eebb44;
+   border-radius:0px;
+   padding:5px;
+   padding-left:10px;
+   box-shadow:0 0 2px #ccc;
+}
+blockquote[quote]{
+   background:#f7fff0;
+   border-left:4px solid #99ee33;
+   border-radius:0px;
+   padding:5px;
+   padding-left:10px;
+   box-shadow:0 0 2px #ccc;
+}
+blockquote[add]{
+   background:#e0f0ff;
+   border-left:4px solid #2266ff;
+   border-radius:0px;
+   padding:5px;
+   padding-left:10px;
+   box-shadow:0 0 2px #ccc;
 }

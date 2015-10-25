@@ -27,7 +27,7 @@
 			<h1>质因数分解</h1>
 			<h2>试除法</h2>
 			<p>试除法是最显而易见的一种质因数分解的方法.我们可以从小到大枚举质因子,然后将它一步步从原数中剔除.由于唯一分解定理,我们可知这个分解结果是唯一的.</p>
-			<p>对于质因数分解我们可以显然地估计出一个上界:$O(\sqrt{n})$.因为一个合数必定有不大于$\sqrt{n}$的质因子,反证法易证,那么我们只需要当枚举的这个数大于当前整数的$\sqrt{n}$时跳出,剩下的那个数一定是一个质数.</p>
+			<p>对于质因数分解我们可以显然地估计出一个上界:$\mathtt{O}(\sqrt{n})$.因为一个合数必定有不大于$\sqrt{n}$的质因子,反证法易证,那么我们只需要当枚举的这个数大于当前整数的$\sqrt{n}$时跳出,剩下的那个数一定是一个质数.</p>
 			<p>对于试除法我们可以用更好的生成素数的方法进行常数优化.对于大整数这个方法的效率极端低下.</p>
 <pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="400px" data-width="800px">struct prime_exponent{
 	long prime,exponent;
@@ -80,13 +80,14 @@ struct trial_division_factor{
 			<p>那么有一个性质,就是$(a+p)^2\equiv a^2\pmod{p}$.这个性质有什么用呢?</p>
 			<p>其实这启发了我们可以在搜索时跳过一些不必要的$a$值.假设$a^2-N\not= b^2$,那$(a+p)^2-N\not=b^2$.</p>
 			<p>那么我们就可以设计出一个算法,它可以跳过一些不必要搜索的值.我们从小到大选取一堆素数,先对最小的那个素数$p_1$,找出一个$a^2-N\equiv b^2\pmod{p_1}$,再以$p_1$一步跳跃着找$a^2-N\equiv b^2\pmod{p+2}$,再以$p_1p_2$一步跳着找...这个过程需要递归,因为二次剩余不只一个,我们需要对所有的都找过去.</p>
-<pre class="codehlt" mode="ace/mode/c_cpp" data-height="350px" data-width="800px">//pseudo code
+<pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="300px" data-width="800px">//pseudo code
 long fermat_with_sieve(long k,long a,long a_end,long a_step,long modulus){
 	long p=a,q=0;
 	while(q&lt;modulus){
 		if(p>a_end) return -1;
 		long b2=a*a-k;
 		if(is_quadratic_residue(b2%modulus,modulus)){
+			if(no_next_prime()) return a;
 			long pp=fermat_with_sieve(k,a,a_end,a_step*modulus,next_prime(modulus));
 			if(~pp) return pp;
 		}
@@ -96,6 +97,15 @@ long fermat_with_sieve(long k,long a,long a_end,long a_step,long modulus){
 	return -1;
 }
 </pre>
+		</div>
+		<div class="page">
+			<div class="float downside"><a href="../">返回'数论算法'</a><space style="width:0.4em;height:1em;"></space><a href="../../">返回首页</a></div>
+			<h2>Pollard p-1算法</h2>
+			<p>John Pollard于1974年发表了第一个质因数分解算法,即这个Pollard p-1算法.</p>
+			<p>基本思想:著名的费马小定理说明$a^{k(p-1)}\equiv 1\pmod{p}$,也就是说$a^{k(p-1)}\equiv 0\pmod{p}$,那么若$N=tp$,则$a^{k(p-1)}\bmod N\mid t$.那么,如果一个给定整数$N$拥有一个素因子$p$,其$p-1$可以分解为一些小素数之积,那我们就可以猜测一个以$p-1$为一个因子的数$q$,那么$\gcd{a^q\bmod N,N}$($a$可以任意选定,但是要和$N$互质)就是$N$的一个因子,很可能是非平凡因子(不是1或$N$).</p>
+			<p>但是在不知道$N$的因子时如何猜测一个数$q$使得$p-q\mid q$呢?大多数$p-1$可以分解为一些小素数的积,那么我们只需要将一些较小的素数都乘起来就可以得到$q$了.此时我们选择一个值$B$,使得$q=\prod_{t=\mathtt{prime}(i)\le B}t^{\lfloor \log_t{B}\rfloor}$就可以完成任务了.当然,这个算法真正的效果是不确定的,甚至不一定能完成分解,而取的值$B$越大就约可能完成分解.</p>
+			<p>注意到在实现中,我们并不需要将$B$值完整地计算出来;我们只需要使用快速幂的技巧来在模$N$下一边幂一边运算.</p>
+			<p>这个算法的复杂度是$\mathtt{O}(B\log{B}\log^2{N})$.在实际使用中,有时会取$B=\mathtt{O}(n^{\rfrac{1}{3}})$,这有$\frac{1}{27}$的机率能分解成功.</p>
 		</div>
 		<script>
 			highlightAllWithACE();
