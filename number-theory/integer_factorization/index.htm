@@ -105,7 +105,7 @@ long fermat_with_sieve(long k,long a,long a_end,long a_step,long modulus){
 			<p>基本思想:著名的费马小定理说明$a^{k(p-1)}\equiv 1\pmod{p}$,也就是说$a^{k(p-1)}\equiv 0\pmod{p}$,那么若$N=tp$,则$a^{k(p-1)}\bmod N\mid t$.那么,如果一个给定整数$N$拥有一个素因子$p$,其$p-1$可以分解为一些小素数之积,那我们就可以猜测一个以$p-1$为一个因子的数$q$,那么$\gcd{a^q\bmod N,N}$($a$可以任意选定,但是要和$N$互质)就是$N$的一个因子,很可能是非平凡因子(不是1或$N$).</p>
 			<p>但是在不知道$N$的因子时如何猜测一个数$q$使得$p-q\mid q$呢?大多数$p-1$可以分解为一些小素数的积,那么我们只需要将一些较小的素数都乘起来就可以得到$q$了.此时我们选择一个值$B$,使得$q=\prod_{t=\mathtt{prime}(i)\le B}t^{\lfloor \log_t{B}\rfloor}$就可以完成任务了.当然,这个算法真正的效果是不确定的,甚至不一定能完成分解,而取的值$B$越大就约可能完成分解.</p>
 			<p>注意到在实现中,我们并不需要将$B$值完整地计算出来;我们只需要使用快速幂的技巧来在模$N$下一边幂一边运算.</p>
-			<p>这个算法的复杂度是$\mathtt{O}(B\log{B}\log^2{N})$.在实际使用中,有时会取$B=\mathtt{O}(n^{\rfrac{1}{3}})$,这有$\frac{1}{27}$的机率能分解成功.</p>
+			<p>这个算法的复杂度是$\mathtt{O}(B\log{B}\log^2{N})$.在实际使用中,有时会取$B=\mathtt{O}(n^{^1/_27})$,这有$\frac{1}{27}$的机率能分解成功.</p>
 		</div>
 		<script>
 			highlightAllWithACE();
