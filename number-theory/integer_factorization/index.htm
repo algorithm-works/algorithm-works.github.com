@@ -4,7 +4,7 @@
 		<title>Algorithm works</title>
 		<script src="//cdn.bootcss.com/prefixfree/1.0.7/prefixfree.min.js"></script>
 		<script src="../../js/acesrc/ace.js"></script>
-		<script src="../../js/codehlt.js"></script>
+      <script data-main="../../js/codehlt" src="../../scripts/require.js"></script>
 		<link href="../../favicon.png" rel="icon" type="image/png" />
 		<link href="../../css/page.css" rel="stylesheet"/>
 		<script type="text/x-mathjax-config">
@@ -122,9 +122,23 @@ long fermat_with_sieve(long k,long a,long a_end,long a_step,long modulus){
 					</li>
 				</ul>
 			</p>
+			<blockquote quote>这里找环可以有一些技巧,比如说,用Brent找环算法代替Floyd找环算法.下面是一个应用了Brent找环算法的Pollard $\rho$算法实例程序</blockquote>
+<pre class="codehlt" data-mode="ace/mode/c_cpp" data-height="300px" data-width="800px">//author: zball  no rights reserved.
+typedef long long ll;//long long当然可以改成高精度数
+ll Pollard_rho(ll n,ll c,ll u){
+	ll i=1,k=2;
+	ll y=u,x0=u;
+	while(1){
+		++i;
+		x0=(modmul(x0,x0,n)+c)%n;//注意modmul需要使用快速乘或(各种奇怪的方法)实现
+		ll d=gcd(y-x0,n);//求最大公约数随便你是欧几里得还是Stein还是HGCD都可以
+		if(d!=1 && d!=n) return d;
+		if(y==x0) return n;
+		if(i==k) y=x0,k+=k;
+	}
+}
+</pre>
+			<h2></h2>
 		</div>
-		<script>
-			highlightAllWithACE();
-		</script>
 	</body>
 </html>
