@@ -5,8 +5,8 @@ algorithm works website.
 [Miller-rabin best base solutions](https://miller-rabin.appspot.com).
 For ones who cannot access this site, a similar table:
 
-|count|date|best|solution|bases|discoverer|
-|:--:|:--:|:--:|:--:|:--:|:--:|
+|count|date|best solution|bases|discoverer|
+|:--:|:--:|:--:|:--:|:--:|
 |1|03-03-2013|341531|9345883071009581737|Steve Worley|
 |2|26-07-2013|1050535501|336781006125, 9639812373923155|Wojciech Izykowski, Marcin Panasiuk|
 |3|27-05-2013|350269456337|4230279247111683200, 14694767155120705706, 16641139526367750375|Steve Worley|
