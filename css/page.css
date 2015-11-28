@@ -70,6 +70,9 @@ body,html{
       column-gap: 20px;
       column-rule: 3px dashed #bbb;
    }
+   .page *{
+      overflow:visible;
+   }
 }
 @media screen and (min-width: 1920px){
    .page{
@@ -79,6 +82,9 @@ body,html{
       overflow-y: hidden;
       column-rule: 3px dashed #bbb;
    }
+   .page *{
+      overflow:visible;
+   }
 }
 .page{
    font-family: Gentium Book Basic,'gt_b';
@@ -87,7 +93,7 @@ body,html{
 }
 .page code{
    font-family:Monaco,Consolas,'monacoregular';
-   font-size:16px;
+   font-size:16px;.
    display: inline-block;
    border: #d7d7d7 1px solid;
    border-radius:3px;
