@@ -12,12 +12,12 @@ requirejs.config({
    }
 });
 require(['ace',"zlib/zlibmain"],function(ace,zlib){
-   var highlightPrefix = "qxcode";
-   var hltSuf = 0;
-   var editors = [];
-   var defaultMode = "ace/mode/javascript";
-   var defaultTheme = "ace/theme/solarized_light";
-   var qset = {};
+   window.highlightPrefix = "qxcode";
+   window.hltSuf = 0;
+   window.editors = [];
+   window.defaultMode = "ace/mode/javascript";
+   window.defaultTheme = "ace/theme/solarized_light";
+   window.qset = {};
 
    window.hltElement = function hltElement(p) {
       editors.push(ace.edit(p.id));
