@@ -65,6 +65,7 @@ body,html{
       height: calc(100vh - 20px);
 /*//      height:auto;*/
       overflow-x: scroll;
+      overflow-y: hidden;
       column-count: 2;
       column-gap: 20px;
       column-rule: 3px dashed #bbb;
@@ -75,6 +76,7 @@ body,html{
       height: calc(100vh - 20px);
       column-width: 900px;
       column-gap: 20px;
+      overflow-y: hidden;
       column-rule: 3px dashed #bbb;
    }
 }
