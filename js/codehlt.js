@@ -19,7 +19,7 @@ require(['ace',"zlib/zlibmain"],function(ace,zlib){
    var defaultTheme = "ace/theme/solarized_light";
    var qset = {};
 
-   function hltElement(p) {
+   window.hltElement = function hltElement(p) {
       editors.push(ace.edit(p.id));
       var le = editors[editors.length - 1];
       var themex = p.dataset["theme"] ? p.dataset["theme"] : defaultTheme;
@@ -38,7 +38,7 @@ require(['ace',"zlib/zlibmain"],function(ace,zlib){
       }
    }
 
-   function enableCodeEdit(p) { //a helper function for furthur development
+   window.enableCodeEdit = function enableCodeEdit(p) { //a helper function for furthur development
       editors.push(ace.edit(p.id));
       var le = editors[editors.length - 1];
       var themex = p.dataset["theme"] ? p.dataset["theme"] : defaultTheme;
@@ -57,14 +57,14 @@ require(['ace',"zlib/zlibmain"],function(ace,zlib){
       return [p, le];
    }
 
-   function qrender(qqxi) {
+   window.qrender = function qrender(qqxi) {
       if (qqxi.dataset["height"]) qqxi.style.height = qqxi.dataset["height"];
       if (qqxi.dataset["width"]) qqxi.style.width = qqxi.dataset["width"];
       hltElement(qqxi);
       if (qqxi.dataset["edit"] == "edit") editors[editors.length - 1].setReadOnly(false);
    }
 
-   function highlightAllWithACE() {
+   window.highlightAllWithACE = function highlightAllWithACE() {
       var qqx = document.querySelectorAll("pre.codehlt");
       ++hltSuf;
       for (var i = 0; i < qqx.length; ++i) {
