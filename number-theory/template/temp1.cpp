@@ -128,13 +128,11 @@ namespace basicmath{
 		}
 	}
 	namespace qmutils{
-		inline ll qm1(rg ll a,rg ll q){
-			if(a<0) a+=q;
-			return a;
+		inline ll qm1(rg ll a,rg ll q){//if a < 0 a+=q
+			return a+((-((unsigned long long)a>>63))&q);
 		}
-		inline ll qm2(rg ll a,rg ll q){
-			if(a>=q) a-=q;
-			return a;
+		inline ll qm2(rg ll a,rg ll q){//if a>= q a-=q
+			return a-((-((unsigned long long)(q+(~a))>>63))&q);
 		}
 	}
 	using namespace qmutils;
