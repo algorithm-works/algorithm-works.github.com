@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Algorithm works</title>
+      <script src="//cdn.bootcss.com/prefixfree/1.0.7/prefixfree.min.js"></script>
+      <link href="css/page.css" rel="stylesheet"/>
+      <link href="favicon.png" rel="icon" type="image/x-icon" />
+      <script data-main="js/codehlt" src="scripts/require.js"></script>
+      <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          extensions: ["tex2jax.js"],
+          jax: ["input/TeX", "output/SVG"],
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true
+          },
+          "HTML-CSS": { availableFonts: ["STIX","TeX"] }
+        });
+      </script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+   </head>
+   <body>
+      <span class="LaTeXDef">
+        \[
+          \def\sfrac#1#2{%
+            \raise.5ex\small#1%
+            \kern-.1em/\kern-.15em%
+            \lower.25ex\small#2}
+        \]
+      </span>
+      <div class="page">$\sfrac{1}{2}$</div>
+   </body>
+</html>
