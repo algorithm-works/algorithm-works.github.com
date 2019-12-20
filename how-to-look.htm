@@ -1,0 +1,224 @@
+<html>
+    <head>
+        <style>
+            .line{
+                width:900px;
+            }
+            .wrapper_div{
+                border: 3px solid gray;
+                border-radius: 6px;
+                padding: 6px;
+                display: inline-block;
+                height:500px;
+                width:410px;
+                vertical-align: top;
+            }
+            .wrapper_div:hover{
+                background-color: antiquewhite;
+            }
+            canvas{
+                border:1px solid black;
+            }
+            .item_title{
+                font-size:30px;
+                height:40px;
+                text-align:center;
+                display: block;
+            }
+            .item_sub{
+                font-size:20px;
+                text-align:left;
+                display: block;
+            }
+            .item_sub_title{
+                text-align:left;
+                width:200px;
+                display: inline-block;
+            }
+            .item_sub input{
+                font-size:20px;
+                padding:3px;
+                width:180px;
+                border-radius: 3px;
+                border: 1px solid black;
+            }
+            .item_sub input:focus{
+                border: 1px solid blue;
+            }
+            #log{
+                width:400px;
+                height:300px;
+            }
+        </style>
+        <script>
+            const confidence_bound=0.995;
+            const confidence_lbound=0.6;
+            var SbjColor=[0,0,0];
+            var ObjColor=[0,0,0];
+            var DeltaLow=0;
+            var DeltaHigh=0.5;
+            var Gamma=2.2;
+            var Success=0;
+            var Total=0;
+            var reset_callback=[];
+            function fromGamma(x){
+                return Math.pow(x/255,Gamma);
+            }
+            function fromLinear(x){
+                return Math.pow(x,1/Gamma)*255;
+            }
+            function ParseColor(str){
+                return str.split(',').map((x)=>fromGamma(parseFloat(x)));
+            }
+            function FillPixels(c0,c0p,c1,array,length,offset){
+                console.log(c0,c0p,c1,offset);
+                for(;offset<length;offset+=4)
+                    array.data[offset]=Math.random()<c0p?c0:c1;
+            }
+            function calcDither(color){
+                let q=fromLinear(color);
+                let c0=Math.floor(q);
+                let c1=Math.ceil(q);
+                return [c0,q-c0,c1];
+            }
+            function do_log(x){
+                document.getElementById("log").value+=x+'\n';
+            }
+            function clear_log(x){
+                document.getElementById("log").value="";
+            }
+            function general_reset(delL,delH){
+                DeltaLow=delL||0.;
+                DeltaHigh=delH||1.;
+                Success=0;
+                Total=0;
+                reset_callback.forEach((x)=>x());
+            }
+            function registerGamma(x){
+                let f=parseFloat(x);
+                if(f==f){
+                    Gamma=x;
+                    general_reset();
+                    do_log(`Gamma changed to ${x}`);
+                }
+            }
+            function showColor(c){
+                return c.map((x)=>x.toFixed(5)).join(",");
+            }
+            function registerS(x){
+                SbjColor=ParseColor(x);
+                general_reset();
+                do_log(`Subject color changed to (${showColor(SbjColor)})`);
+            }
+            function registerO(x){
+                ObjColor=ParseColor(x);
+                Delta=1;
+                general_reset();
+                do_log(`Object color changed to (${showColor(ObjColor)})`);
+            }
+            function erf(x) {
+                var a1 =  0.254829592;
+                var a2 = -0.284496736;
+                var a3 =  1.421413741;
+                var a4 = -1.453152027;
+                var a5 =  1.061405429;
+                var p  =  0.3275911;
+                var sign = 1;
+                if (x < 0) {
+                    sign = -1;
+                }
+                x = Math.abs(x);
+                var t = 1.0/(1.0 + p*x);
+                var y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
+                return sign*y;
+            }
+            function CDF(x,mu,sigma){
+                return (1+erf((x-mu)/(sigma*Math.SQRT2)))/2;
+            }
+            function confidence(){
+                if(Total==0) return 0.;
+                return CDF(Success*Total/(Total+1),Total/2,Math.sqrt(Total)/2);
+            }
+            function draw_canvas(ctx,col){
+                let u=ctx.createImageData(400,400);
+                for(let i=0;i<3;++i){
+                    let c=calcDither(col[i]);
+                    FillPixels(c[0],c[1],c[2],u,400*400*4,i);
+                }
+                for(let i=3;i<400*400*4;i+=4)
+                    u.data[i]=255;
+                console.log(u);
+                ctx.putImageData(u, 0, 0);
+            }
+            function cintp(c0,c1,q){
+                let p=1-q;
+                return [c0[0]*p+c1[0]*q,c0[1]*p+c1[1]*q,c0[2]*p+c1[2]*q];
+            }
+            function stats(){
+                let conf=confidence();
+                do_log(`Delta ${((DeltaHigh+DeltaLow)/2).toFixed(5)}, Rate ${Success}/${Total}, Confidence ${conf}`);
+                if(conf >= confidence_bound)
+                    general_reset(DeltaLow,(DeltaLow+DeltaHigh)/2);
+                else if(Total>=10 && conf<=confidence_lbound)
+                    general_reset((DeltaLow+DeltaHigh)/2,DeltaHigh);
+            }
+        </script>
+    </head>
+    <body>
+        <div class="line">
+            <div class="wrapper_div">
+                <span class="item_title">Configuration</span>
+                <span class="item_sub"><span class="item_sub_title">Gamma</span><input onchange="registerGamma(this.value)" value="2.2"/></span>
+                <span class="item_sub"><span class="item_sub_title">Subject</span><input onchange="registerS(this.value)" value="0,0,0"/></span>
+                <span class="item_sub"><span class="item_sub_title">Object </span><input onchange="registerO(this.value)" value="0,0,0"/></span>
+                <span class="item_sub"><textarea id="log" readonly="readonly"></textarea></span>
+            </div>
+            <div class="wrapper_div">
+                <span class="item_title">Test Image</span>
+                <canvas id="testi" height="400" width="400"></canvas>
+            </div>
+        </div>
+        <div class="line">
+            <div class="wrapper_div" id="sjdv">
+                <span class="item_title" id="subject"></span>
+                <canvas id="subjectc" height="400" width="400"></canvas>
+            </div>
+            <div class="wrapper_div" id="ojdv">
+                <span class="item_title" id="object"></span>
+                <canvas id="objectc" height="400" width="400"></canvas>
+            </div>
+        </div>
+        <script>
+            /**
+             * bootstrap script here
+             **/
+            var tstc=testi.getContext("2d");
+            var sbjc=subjectc.getContext("2d");
+            var objc=objectc.getContext("2d");
+            function generate_quiz(){
+                let answ=Math.random()<0.5;
+                let deltaMid=(DeltaLow+DeltaHigh)/2;
+                let l=Math.random()*(1-deltaMid);
+                let r=l+deltaMid;
+                let colorL=cintp(SbjColor,ObjColor,l);
+                let colorR=cintp(SbjColor,ObjColor,r);
+                subject.innerText=showColor(colorL);
+                object.innerText=showColor(colorR);
+                draw_canvas(tstc,answ?colorR:colorL);
+                draw_canvas(sbjc,colorL);
+                draw_canvas(objc,colorR);
+                let submit=(x)=>{
+                    ++Total;
+                    if(x==answ) ++Success;
+                    stats();
+                    generate_quiz();
+                }
+                sjdv.onclick=(e)=>submit(false);
+                ojdv.onclick=(e)=>submit(true);
+            }
+            reset_callback.push(generate_quiz);
+            generate_quiz();
+            clear_log();
+        </script>
+    </body>
+</html>
